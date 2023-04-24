@@ -37,8 +37,8 @@ enc = pickle.load(open('Label_encoder','rb'))
 
 ## Importing a pre trained spacy 
 
-nlp = spacy.load('en_core_web_sm')
-# nlp = spacy.load('en_core_web_trf')
+# nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_trf')
 
 # Text Extraction Functions
 
