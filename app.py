@@ -50,9 +50,9 @@ def extract_text_from_pdf(uploaded_file):
     converter = TextConverter(resource_manager, output_string, laparams=LAParams())
     interpreter = PDFPageInterpreter(resource_manager, converter)
     for page in PDFPage.get_pages(uploaded_file):
-#         try:
-#             interpreter.process_page(page)
-#         except AttributeError:
+        try:
+            interpreter.process_page(page)
+        except AttributeError:
             ocrmypdf_file = 'ocrmypdf_temp.pdf'
             ocrmypdf.ocr(page, ocrmypdf_file,redo_ocr=True)
             with open(ocrmypdf_file, 'rb') as ocr_file:
