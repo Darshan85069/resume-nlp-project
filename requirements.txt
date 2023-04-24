@@ -21,7 +21,7 @@ cloudpickle
 pickleshare
 pickle5
 pathlib
-os-sys
+
 pdfminer.six==20221105
 pdfminer3==2018.12.3.0
 pdfplumber==0.9.0
