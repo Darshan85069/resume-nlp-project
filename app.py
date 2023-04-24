@@ -38,7 +38,8 @@ enc = pickle.load(open('Label_encoder','rb'))
 ## Importing a pre trained spacy 
 
 # nlp = spacy.load('en_core_web_sm')
-nlp = spacy.load('en_core_web_trf')
+# nlp = spacy.load('en_core_web_trf')
+nlp = spacy.load('en_core_web_md')
 
 # Text Extraction Functions
 
@@ -49,11 +50,11 @@ def extract_text_from_pdf(uploaded_file):
     converter = TextConverter(resource_manager, output_string, laparams=LAParams())
     interpreter = PDFPageInterpreter(resource_manager, converter)
     for page in PDFPage.get_pages(uploaded_file):
-        try:
-            interpreter.process_page(page)
-        except AttributeError:
+#         try:
+#             interpreter.process_page(page)
+#         except AttributeError:
             ocrmypdf_file = 'ocrmypdf_temp.pdf'
-            ocrmypdf.ocr(page, ocrmypdf_file)
+            ocrmypdf.ocr(page, ocrmypdf_file,redo_ocr=True)
             with open(ocrmypdf_file, 'rb') as ocr_file:
                     for ocr_page in PDFPage.get_pages(ocr_file):
                         interpreter.process_page(ocr_page)
