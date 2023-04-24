@@ -38,8 +38,9 @@ enc = pickle.load(open('Label_encoder','rb'))
 ## Importing a pre trained spacy 
 
 nlp = spacy.load('en_core_web_sm')
+# nlp2 = spacy.load('en_core_web_md')
 # nlp = spacy.load('en_core_web_trf')
-# nlp = spacy.load('en_core_web_md')
+
 
 # Text Extraction Functions
 
@@ -80,6 +81,7 @@ def category(text):
 # Details Extration Functions
 
 def applicant_name(docx):
+    
     person_names = []
     for ent in docx.ents:
         if ent.label_ == 'PERSON':
@@ -148,31 +150,31 @@ def resume_score(resume,Job_desc):
     user_category = category(resume_filtered)
     
     ## Job vs User category score
-    job_category = category(Job_desc_filtered)
-    category_match_score = 1 if job_category == user_category else 0
+    # job_category = category(Job_desc_filtered)
+    # category_match_score = 1 if job_category == user_category else 0
     
     ## Skills Scores
-    skills_score = len(skills_extract(resume)) if skills_extract(resume) else 0 ##Spacy en_core_web_sm not able to detect skills 
+    # skills_score = len(skills_extract(resume)) if skills_extract(resume) else 0 ##Spacy en_core_web_sm not able to detect skills 
     
     ## Experience Score
-    experience_score = len(extract_experience(resume)) if extract_experience(resume) else 0
+    # experience_score = len(extract_experience(resume)) if extract_experience(resume) else 0
     ## Give a weights to each one
     ## w1-->cosimilarity 75%
     ## w3-->job vs user category score 10%
     ## w4-->skills scores 5%, 
     ## w5-->Experience scores 10%
     
-    w1=0.75
-    # w2=0.20
-    w3=0.10
-    w4=0.05
-    w5=0.05
-    total_scores = (w1*similarity_score)+(w3*category_match_score)+(w4*skills_score)+(w5*experience_score)
-    if (total_scores >= 60):
+    # w1=0.75
+    # # w2=0.20
+    # w3=0.10
+    # w4=0.05
+    # w5=0.05
+    # total_scores = (w1*similarity_score)+(w3*category_match_score)+(w4*skills_score)+(w5*experience_score)
+    if (similarity_score >= 60):
         result = 'PASS'
     else:
         result = 'FAIL'
-    return f'RESULT:{result}', f'User Category : {user_category}.',f'Co similarity : {similarity_score}%', f"Skills score : {skills_score}%", f'Experience scores : {experience_score}%',f'Total Resume Score : {total_scores}%'
+    return f'RESULT:{result}', f'User Category : {user_category}.',f'Co similarity : {similarity_score}%'
 
 
 ## Streamlit app 
@@ -180,8 +182,8 @@ def app():
     st.title('Resume Analyser Prototype') 
     job = st.text_input('Job Description','''machine learning, data science, pandas , numpy, sql, deep learning, computer vision , data visualisation , python ''')
        
-    uploaded_file = st.file_uploader("Choose a file")
-    if st.button('Upload File'):
+    uploaded_file = st.file_uploader("select pdf or docx file")
+    if st.button('start to process'):
         if uploaded_file is not None:
             file_type = uploaded_file.type
             if file_type == "application/pdf":
@@ -192,13 +194,16 @@ def app():
                 st.warning("Please upload a PDF or DOCX file.")
             if resume:
                 resume = nlp(resume)
+                # resume = nlp2(resume)
                 job=nlp(job)
                 
-                st.write('Applicant Name:',applicant_name(resume))
+                # st.write('Applicant Name:',applicant_name(resume))
+                st.write('Resume score:',resume_score(resume,job))
                 st.write('Contact No:',phone_extract(resume))
                 st.write('Email:',email_extract(resume))
                 st.write('Skills:', skills_extract(resume))
                 st.write('Experience:', extract_experience(resume))
+                st.write('Resume desc',resume.text)
                 
                 st.write('Resume score:',resume_score(resume,job))
                 
@@ -207,15 +212,15 @@ def app():
     
     if st.button('Click Here to Get Project info'):
         st.write('respository link',"https://github.com/Darshan85069/resume-nlp-project.git")
-#         im1 = Image.open("images\Prototype_Page_1.jpg")
-#         im2 = Image.open("images\Prototype_Page_2.jpg")
-#         im3 = Image.open("images\Prototype_Page_3.jpg")
-#         im4 = Image.open("images\Prototype_Page_4.jpg")
-#         im5 = Image.open("images\Prototype_Page_5.jpg")
-#         im6 = Image.open("images\Prototype_Page_6.jpg")
-#         im7 = Image.open("images\Prototype_Page_7.jpg")
+        im1 = Image.open("images\Prototype_Page_1.jpg")
+        im2 = Image.open("images\Prototype_Page_2.jpg")
+        im3 = Image.open("images\Prototype_Page_3.jpg")
+        im4 = Image.open("images\Prototype_Page_4.jpg")
+        im5 = Image.open("images\Prototype_Page_5.jpg")
+        im6 = Image.open("images\Prototype_Page_6.jpg")
+        im7 = Image.open("images\Prototype_Page_7.jpg")
         
-#         st.image([im1,im2,im3,im4,im5,im6,im7])
+        st.image([im1,im2,im3,im4,im5,im6,im7])
         
 
 app()
