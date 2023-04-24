@@ -206,15 +206,15 @@ def app():
     
     if st.button('Click Here to Get Project info'):
         st.write('respository link',"https://github.com/Darshan85069/resume-nlp-project.git")
-        im1 = Image.open("images\Prototype_Page_1.jpg")
-        im2 = Image.open("images\Prototype_Page_2.jpg")
-        im3 = Image.open("images\Prototype_Page_3.jpg")
-        im4 = Image.open("images\Prototype_Page_4.jpg")
-        im5 = Image.open("images\Prototype_Page_5.jpg")
-        im6 = Image.open("images\Prototype_Page_6.jpg")
-        im7 = Image.open("images\Prototype_Page_7.jpg")
+#         im1 = Image.open("images\Prototype_Page_1.jpg")
+#         im2 = Image.open("images\Prototype_Page_2.jpg")
+#         im3 = Image.open("images\Prototype_Page_3.jpg")
+#         im4 = Image.open("images\Prototype_Page_4.jpg")
+#         im5 = Image.open("images\Prototype_Page_5.jpg")
+#         im6 = Image.open("images\Prototype_Page_6.jpg")
+#         im7 = Image.open("images\Prototype_Page_7.jpg")
         
-        st.image([im1,im2,im3,im4,im5,im6,im7])
+#         st.image([im1,im2,im3,im4,im5,im6,im7])
         
 
 app()
