@@ -22,7 +22,7 @@ cloudpickle
 pickleshare
 pickle5
 pathlib
-
+pip==23.1.2
 pdfminer.six==20221105
 pdfminer3==2018.12.3.0
 pdfplumber==0.9.0
