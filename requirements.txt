@@ -29,3 +29,4 @@ pdfplumber==0.9.0
 pdfreader==0.1.12
 ocrmypdf==14.1.0
 openpyxl==3.0.10
+sudo apt-get install pkg-config
